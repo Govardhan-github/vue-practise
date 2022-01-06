@@ -1,16 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<navigation />
+<TheLoader  v-if="showLoading" />
+  <router-view></router-view>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import navigation from './components/navigation.vue'
+import TheLoader from './components/TheLoader.vue'
+import { mapState } from 'vuex';
+ import { AUTO_LOGIN_ACTION } from './Store/storeConstants'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    navigation,
+    TheLoader
+  },
+  computed: {
+    ...mapState({
+      showLoading: state => state.showLoading
+    })
+  },
+  created() {
+    this.$store.dispatch(`auth/${AUTO_LOGIN_ACTION}`)
+  },
+  methods: {
+    
+  },
 }
 </script>
 
